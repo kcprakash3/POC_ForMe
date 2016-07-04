@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:email="http://www.mulesoft.org/schema/mule/email" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
+    <file:connector name="File" autoDelete="true" streaming="false" validateConnections="true" doc:name="File"/>
+    <flow name="FileBasedFlow">
+        <byte-array-to-string-transformer doc:name="Byte Array to String"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+    <flow name="FileBasedFlowtoObject">
+        <byte-array-to-object-transformer doc:name="Byte Array to Object"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+    <flow name="FileBasedFlowtoMIME">
+        <file:inbound-endpoint path="E:\SSP_Dev\workspaces\ForMe\dataweaver\src\main\resources\Input" connector-ref="File" responseTimeout="10000" mimeType="text/csv" metadata:id="22e85e45-2211-48eb-90f3-12cfe7e8bd42" doc:name="File"/>
+        <email:bytes-to-mime-transformer mimeType="text/csv" doc:name="Byte Array to MIME"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+</mule>

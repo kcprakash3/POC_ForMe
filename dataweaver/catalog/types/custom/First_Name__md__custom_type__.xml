@@ -1,0 +1,287 @@
+<custom__type__definition>
+  <version>5.2.0.0</version>
+  <typeName class="org.mule.common.metadata.DefaultMetaDataKey">
+    <id>First_Name</id>
+    <displayName>First_Name</displayName>
+    <category>DEFAULT</category>
+    <metaDataKeyPropertiesManager>
+      <properties>
+        <org.mule.common.metadata.key.property.dsql.DsqlFromMetaDataKeyProperty/>
+      </properties>
+    </metaDataKeyPropertiesManager>
+  </typeName>
+  <metadataModel class="org.mule.common.metadata.DefaultListMetaDataModel">
+    <dataType>LIST</dataType>
+    <metaDataModelPropertiesManager>
+      <properties/>
+    </metaDataModelPropertiesManager>
+    <model class="org.mule.common.metadata.DefaultStructuredMetadataModel">
+      <dataType>CSV</dataType>
+      <metaDataModelPropertiesManager>
+        <properties>
+          <org.mule.common.metadata.property.CSVHasHeadersMetaDataProperty>
+            <hasHeaders>true</hasHeaders>
+          </org.mule.common.metadata.property.CSVHasHeadersMetaDataProperty>
+        </properties>
+      </metaDataModelPropertiesManager>
+      <fields>
+        <org.mule.common.metadata.DefaultMetaDataField>
+          <name>ï»¿User Name</name>
+          <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+            <dataType>STRING</dataType>
+            <metaDataModelPropertiesManager>
+              <properties/>
+            </metaDataModelPropertiesManager>
+          </model>
+          <accessType>READ</accessType>
+          <metaDataFieldPropertyManager>
+            <properties>
+              <org.mule.common.metadata.property.LabelMetaDataProperty>
+                <label>ï»¿User Name</label>
+              </org.mule.common.metadata.property.LabelMetaDataProperty>
+            </properties>
+          </metaDataFieldPropertyManager>
+        </org.mule.common.metadata.DefaultMetaDataField>
+        <org.mule.common.metadata.DefaultMetaDataField>
+          <name>First Name</name>
+          <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+            <dataType>STRING</dataType>
+            <metaDataModelPropertiesManager>
+              <properties/>
+            </metaDataModelPropertiesManager>
+          </model>
+          <accessType>READ</accessType>
+          <metaDataFieldPropertyManager>
+            <properties>
+              <org.mule.common.metadata.property.LabelMetaDataProperty>
+                <label>First Name</label>
+              </org.mule.common.metadata.property.LabelMetaDataProperty>
+            </properties>
+          </metaDataFieldPropertyManager>
+        </org.mule.common.metadata.DefaultMetaDataField>
+        <org.mule.common.metadata.DefaultMetaDataField>
+          <name>Last Name</name>
+          <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+            <dataType>STRING</dataType>
+            <metaDataModelPropertiesManager>
+              <properties/>
+            </metaDataModelPropertiesManager>
+          </model>
+          <accessType>READ</accessType>
+          <metaDataFieldPropertyManager>
+            <properties>
+              <org.mule.common.metadata.property.LabelMetaDataProperty>
+                <label>Last Name</label>
+              </org.mule.common.metadata.property.LabelMetaDataProperty>
+            </properties>
+          </metaDataFieldPropertyManager>
+        </org.mule.common.metadata.DefaultMetaDataField>
+        <org.mule.common.metadata.DefaultMetaDataField>
+          <name>Display Name</name>
+          <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+            <dataType>STRING</dataType>
+            <metaDataModelPropertiesManager>
+              <properties/>
+            </metaDataModelPropertiesManager>
+          </model>
+          <accessType>READ</accessType>
+          <metaDataFieldPropertyManager>
+            <properties>
+              <org.mule.common.metadata.property.LabelMetaDataProperty>
+                <label>Display Name</label>
+              </org.mule.common.metadata.property.LabelMetaDataProperty>
+            </properties>
+          </metaDataFieldPropertyManager>
+        </org.mule.common.metadata.DefaultMetaDataField>
+        <org.mule.common.metadata.DefaultMetaDataField>
+          <name>Job Title</name>
+          <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+            <dataType>STRING</dataType>
+            <metaDataModelPropertiesManager>
+              <properties/>
+            </metaDataModelPropertiesManager>
+          </model>
+          <accessType>READ</accessType>
+          <metaDataFieldPropertyManager>
+            <properties>
+              <org.mule.common.metadata.property.LabelMetaDataProperty>
+                <label>Job Title</label>
+              </org.mule.common.metadata.property.LabelMetaDataProperty>
+            </properties>
+          </metaDataFieldPropertyManager>
+        </org.mule.common.metadata.DefaultMetaDataField>
+        <org.mule.common.metadata.DefaultMetaDataField>
+          <name>Department</name>
+          <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+            <dataType>STRING</dataType>
+            <metaDataModelPropertiesManager>
+              <properties/>
+            </metaDataModelPropertiesManager>
+          </model>
+          <accessType>READ</accessType>
+          <metaDataFieldPropertyManager>
+            <properties>
+              <org.mule.common.metadata.property.LabelMetaDataProperty>
+                <label>Department</label>
+              </org.mule.common.metadata.property.LabelMetaDataProperty>
+            </properties>
+          </metaDataFieldPropertyManager>
+        </org.mule.common.metadata.DefaultMetaDataField>
+        <org.mule.common.metadata.DefaultMetaDataField>
+          <name>Office Number</name>
+          <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+            <dataType>STRING</dataType>
+            <metaDataModelPropertiesManager>
+              <properties/>
+            </metaDataModelPropertiesManager>
+          </model>
+          <accessType>READ</accessType>
+          <metaDataFieldPropertyManager>
+            <properties>
+              <org.mule.common.metadata.property.LabelMetaDataProperty>
+                <label>Office Number</label>
+              </org.mule.common.metadata.property.LabelMetaDataProperty>
+            </properties>
+          </metaDataFieldPropertyManager>
+        </org.mule.common.metadata.DefaultMetaDataField>
+        <org.mule.common.metadata.DefaultMetaDataField>
+          <name>Office Phone</name>
+          <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+            <dataType>STRING</dataType>
+            <metaDataModelPropertiesManager>
+              <properties/>
+            </metaDataModelPropertiesManager>
+          </model>
+          <accessType>READ</accessType>
+          <metaDataFieldPropertyManager>
+            <properties>
+              <org.mule.common.metadata.property.LabelMetaDataProperty>
+                <label>Office Phone</label>
+              </org.mule.common.metadata.property.LabelMetaDataProperty>
+            </properties>
+          </metaDataFieldPropertyManager>
+        </org.mule.common.metadata.DefaultMetaDataField>
+        <org.mule.common.metadata.DefaultMetaDataField>
+          <name>Mobile Phone</name>
+          <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+            <dataType>STRING</dataType>
+            <metaDataModelPropertiesManager>
+              <properties/>
+            </metaDataModelPropertiesManager>
+          </model>
+          <accessType>READ</accessType>
+          <metaDataFieldPropertyManager>
+            <properties>
+              <org.mule.common.metadata.property.LabelMetaDataProperty>
+                <label>Mobile Phone</label>
+              </org.mule.common.metadata.property.LabelMetaDataProperty>
+            </properties>
+          </metaDataFieldPropertyManager>
+        </org.mule.common.metadata.DefaultMetaDataField>
+        <org.mule.common.metadata.DefaultMetaDataField>
+          <name>Fax</name>
+          <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+            <dataType>STRING</dataType>
+            <metaDataModelPropertiesManager>
+              <properties/>
+            </metaDataModelPropertiesManager>
+          </model>
+          <accessType>READ</accessType>
+          <metaDataFieldPropertyManager>
+            <properties>
+              <org.mule.common.metadata.property.LabelMetaDataProperty>
+                <label>Fax</label>
+              </org.mule.common.metadata.property.LabelMetaDataProperty>
+            </properties>
+          </metaDataFieldPropertyManager>
+        </org.mule.common.metadata.DefaultMetaDataField>
+        <org.mule.common.metadata.DefaultMetaDataField>
+          <name>Address</name>
+          <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+            <dataType>STRING</dataType>
+            <metaDataModelPropertiesManager>
+              <properties/>
+            </metaDataModelPropertiesManager>
+          </model>
+          <accessType>READ</accessType>
+          <metaDataFieldPropertyManager>
+            <properties>
+              <org.mule.common.metadata.property.LabelMetaDataProperty>
+                <label>Address</label>
+              </org.mule.common.metadata.property.LabelMetaDataProperty>
+            </properties>
+          </metaDataFieldPropertyManager>
+        </org.mule.common.metadata.DefaultMetaDataField>
+        <org.mule.common.metadata.DefaultMetaDataField>
+          <name>City</name>
+          <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+            <dataType>STRING</dataType>
+            <metaDataModelPropertiesManager>
+              <properties/>
+            </metaDataModelPropertiesManager>
+          </model>
+          <accessType>READ</accessType>
+          <metaDataFieldPropertyManager>
+            <properties>
+              <org.mule.common.metadata.property.LabelMetaDataProperty>
+                <label>City</label>
+              </org.mule.common.metadata.property.LabelMetaDataProperty>
+            </properties>
+          </metaDataFieldPropertyManager>
+        </org.mule.common.metadata.DefaultMetaDataField>
+        <org.mule.common.metadata.DefaultMetaDataField>
+          <name>State or Province</name>
+          <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+            <dataType>STRING</dataType>
+            <metaDataModelPropertiesManager>
+              <properties/>
+            </metaDataModelPropertiesManager>
+          </model>
+          <accessType>READ</accessType>
+          <metaDataFieldPropertyManager>
+            <properties>
+              <org.mule.common.metadata.property.LabelMetaDataProperty>
+                <label>State or Province</label>
+              </org.mule.common.metadata.property.LabelMetaDataProperty>
+            </properties>
+          </metaDataFieldPropertyManager>
+        </org.mule.common.metadata.DefaultMetaDataField>
+        <org.mule.common.metadata.DefaultMetaDataField>
+          <name>ZIP or Postal Code</name>
+          <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+            <dataType>STRING</dataType>
+            <metaDataModelPropertiesManager>
+              <properties/>
+            </metaDataModelPropertiesManager>
+          </model>
+          <accessType>READ</accessType>
+          <metaDataFieldPropertyManager>
+            <properties>
+              <org.mule.common.metadata.property.LabelMetaDataProperty>
+                <label>ZIP or Postal Code</label>
+              </org.mule.common.metadata.property.LabelMetaDataProperty>
+            </properties>
+          </metaDataFieldPropertyManager>
+        </org.mule.common.metadata.DefaultMetaDataField>
+        <org.mule.common.metadata.DefaultMetaDataField>
+          <name>Country or Region</name>
+          <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+            <dataType>STRING</dataType>
+            <metaDataModelPropertiesManager>
+              <properties/>
+            </metaDataModelPropertiesManager>
+          </model>
+          <accessType>READ</accessType>
+          <metaDataFieldPropertyManager>
+            <properties>
+              <org.mule.common.metadata.property.LabelMetaDataProperty>
+                <label>Country or Region</label>
+              </org.mule.common.metadata.property.LabelMetaDataProperty>
+            </properties>
+          </metaDataFieldPropertyManager>
+        </org.mule.common.metadata.DefaultMetaDataField>
+      </fields>
+    </model>
+    <isArray>false</isArray>
+  </metadataModel>
+</custom__type__definition>

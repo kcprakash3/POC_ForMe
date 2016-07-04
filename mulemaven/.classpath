@@ -1,0 +1,9 @@
+<classpath>
+  <classpathentry kind="src" path="src/main/resources" excluding="**/*.java"/>
+  <classpathentry kind="src" path="src/main/domain" excluding="**/*.java"/>
+  <classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="con" path="MULE_RUNTIME"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.6.6/slf4j-api-1.6.6.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/zeroturnaround/zt-zip/1.9/zt-zip-1.9.jar"/>
+</classpath>

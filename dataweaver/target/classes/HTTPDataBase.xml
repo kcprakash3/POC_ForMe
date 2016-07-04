@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wmq="http://www.mulesoft.org/schema/mule/ee/wmq" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/ee/wmq http://www.mulesoft.org/schema/mule/ee/wmq/current/mule-wmq-ee.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8000" basePath="/forme" doc:name="HTTP Listener Configuration"/>
+    <db:mysql-config name="MySQL_Configuration" url="jdbc:sqlserver://172.24.144.25:1433;instanceName=SQLEXPRESS;databaseName=INTHUB;username=sa;password=aspire@123" doc:name="MySQL Configuration"/>
+    <db:generic-config name="Generic_Database_Configuration" url="jdbc:sqlserver://172.24.144.25:1433;instanceName=SQLEXPRESS;databaseName=INTHUB;username=sa;password=aspire@123" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" doc:name="Generic Database Configuration"/>
+    <flow name="dataweaverFlowtoXML">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/toXML" allowedMethods="GET" doc:name="HTTP"/>
+        <db:select config-ref="Generic_Database_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[SELECT AT_ID, AT_INDEX, AT_CREATION_DATE, STATUS FROM dbo.DG_PRINT_DISTRIBUTION where STATUS='NEW']]></db:parameterized-query>
+        </db:select>
+        <mulexml:object-to-xml-transformer doc:name="Object to XML"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+     <flow name="dataweaverFlowtoString">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/toString" allowedMethods="GET" doc:name="HTTP"/>
+        <db:select config-ref="Generic_Database_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[SELECT AT_ID, AT_INDEX, AT_CREATION_DATE, STATUS FROM dbo.DG_PRINT_DISTRIBUTION where STATUS='NEW']]></db:parameterized-query>
+        </db:select>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+    <flow name="dataweaverFlowtoJSON">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/toJSON" allowedMethods="GET" doc:name="HTTP"/>
+        <db:select config-ref="Generic_Database_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[SELECT AT_ID, AT_INDEX, AT_CREATION_DATE, STATUS FROM dbo.DG_PRINT_DISTRIBUTION where STATUS='NEW']]></db:parameterized-query>
+        </db:select>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+     <flow name="dataweaverFlowtoObject">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/toObject" allowedMethods="GET" doc:name="HTTP"/>
+        <db:select config-ref="Generic_Database_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[SELECT AT_ID, AT_INDEX, AT_CREATION_DATE, STATUS FROM dbo.DG_PRINT_DISTRIBUTION where STATUS='NEW']]></db:parameterized-query>
+        </db:select>
+        <set-variable variableName="fullList" value="#[payload]" doc:name="Variable"/>
+        <set-payload value="#[flowVars.fullList[0].AT_INDEX]" doc:name="Set Payload"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+</mule>
