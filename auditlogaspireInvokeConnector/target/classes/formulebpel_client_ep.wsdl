@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<wsdl:definitions
+     name="ForMuleBPEL"
+     targetNamespace="http://xmlns.oracle.com/AurasApplication/ForMule/ForMuleBPEL"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:client="http://xmlns.oracle.com/AurasApplication/ForMule/ForMuleBPEL"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    >
+    <wsdl:documentation>
+        <abstractWSDL>http://ASPIREVM8-11.Aspiresys.com:7011/soa-infra/services/Training/ForMule!1.0/ForMuleBPEL.wsdl</abstractWSDL>
+    </wsdl:documentation>
+    <plnk:partnerLinkType name="ForMuleBPEL">
+        <plnk:role name="ForMuleBPELProvider" portType="client:ForMuleBPEL"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/AurasApplication/ForMule/ForMuleBPEL" schemaLocation="ForMuleBPEL.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="ForMuleBPELRequestMessage">
+        <wsdl:part name="payload" element="client:process"/>
+    </wsdl:message>
+    <wsdl:message name="ForMuleBPELResponseMessage">
+        <wsdl:part name="payload" element="client:processResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="ForMuleBPEL">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:ForMuleBPELRequestMessage"/>
+            <wsdl:output message="client:ForMuleBPELResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ForMuleBPELBinding" type="client:ForMuleBPEL">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="process">
+            <soap:operation style="document" soapAction="process"/>
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/AurasApplication/ForMule/ForMuleBPEL"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/AurasApplication/ForMule/ForMuleBPEL"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="formulebpel_client_ep">
+        <wsdl:port name="ForMuleBPEL_pt" binding="client:ForMuleBPELBinding">
+            <soap:address location="http://aspirevm8-11.aspiresys.com:7011/soa-infra/services/Training/ForMule/formulebpel_client_ep"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

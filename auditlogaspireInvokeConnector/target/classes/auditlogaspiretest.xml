@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:quartz="http://www.mulesoft.org/schema/mule/quartz" xmlns:jms="http://www.mulesoft.org/schema/mule/jms" xmlns:ws="http://www.mulesoft.org/schema/mule/ws" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:audit-aspire-rest="http://www.mulesoft.org/schema/mule/audit-aspire-rest" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:audit-log-aspire="http://www.mulesoft.org/schema/mule/audit-log-aspire" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/audit-log-aspire http://www.mulesoft.org/schema/mule/audit-log-aspire/current/mule-audit-log-aspire.xsd
+http://www.mulesoft.org/schema/mule/audit-aspire-rest http://www.mulesoft.org/schema/mule/audit-aspire-rest/current/mule-audit-aspire-rest.xsd
+http://www.mulesoft.org/schema/mule/ws http://www.mulesoft.org/schema/mule/ws/current/mule-ws.xsd
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
+http://www.mulesoft.org/schema/mule/quartz http://www.mulesoft.org/schema/mule/quartz/current/mule-quartz.xsd">
+   
+   <spring:beans>
+		<spring:bean id="redeliveryPolicy" name="RedeliveryPolicy"
+			class="org.apache.activemq.RedeliveryPolicy">
+			<spring:property name="useExponentialBackOff" value="false" />
+			<spring:property name="maximumRedeliveries" value="5" />
+		</spring:bean>
+		<spring:bean id="amqFactory" name="AMQConnectionFactory"
+			class="org.apache.activemq.ActiveMQConnectionFactory" lazy-init="true">
+			<spring:property name="brokerURL" value="${activemq.broker.url}" />
+			<spring:property name="redeliveryPolicy" ref="redeliveryPolicy" />
+		</spring:bean>		
+	</spring:beans>
+    
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8002" doc:name="HTTP Listener Configuration"/>
+    <audit-log-aspire:config name="AuditLogAspire__Configuration" doc:name="AuditLogAspire: Configuration" company="NewAspire" reply="Go HOme"/>
+    <flow name="auditlogaspiretestFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/conn" doc:name="HTTP"/>
+        <set-payload value="Success Connector" doc:name="Set Payload"/>
+        <audit-log-aspire:get-company config-ref="AuditLogAspire__Configuration"  doc:name="AuditLogAspire" company="Birlasoft" friend="Chella"/>
+        <set-property propertyName="Temp" value="&lt;wsse:Security soapenv:mustUnderstand=&quot;1&quot; xmlns:wsse=&quot;http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd&quot; xmlns:wsu=&quot;http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd&quot;&gt;&lt;wsse:UsernameToken wsu:Id=&quot;UsernameToken-1&quot;&gt;&lt;wsse:Username&gt;weblogic&lt;/wsse:Username&gt;&lt;wsse:Password Type=&quot;http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText&quot;&gt;aspire123&lt;/wsse:Password&gt;&lt;wsse:Nonce EncodingType=&quot;http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary&quot;&gt;pJPX0aTcnHAroKKBaL47JA==&lt;/wsse:Nonce&gt;&lt;wsu:Created&gt;2016-07-29T06:36:41.646Z&lt;/wsu:Created&gt;&lt;/wsse:UsernameToken&gt;&lt;/wsse:Security&gt;" doc:name="Property"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+</mule>
