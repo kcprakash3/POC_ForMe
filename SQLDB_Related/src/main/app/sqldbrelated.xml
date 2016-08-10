@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <db:generic-config name="Generic_Database_Configuration" url="jdbc:sqlserver://172.24.144.25:1433;instanceName=SQLEXPRESS;databaseName=MuleSoft;user=sa;password=aspire@123;" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" doc:name="Generic Database Configuration"/>
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8100" basePath="/db" doc:name="HTTP Listener Configuration"/>
+    <flow name="SQLInboundFlow">
+        <poll doc:name="Poll">
+            <fixed-frequency-scheduler frequency="30000"/>
+            <db:select config-ref="Generic_Database_Configuration" doc:name="Database">
+                <db:parameterized-query><![CDATA[select empid,empname,empdept,empstatus from dbo.EmployeeDetail;]]></db:parameterized-query>
+            </db:select>
+        </poll>
+        <set-variable variableName="employeeAll" value="#[payload]" doc:name="Employee"/>
+        <set-variable variableName="employeeSize" value="#[flowVars.'employeeAll'.size()]" doc:name="Employee Records Size"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+    <flow name="DBInsert">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/insert" allowedMethods="GET" doc:name="HTTP"/>
+        <db:insert config-ref="Generic_Database_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[insert into dbo.EmployeeDetail values ('ByHTTPInsert',102,'Hold')]]></db:parameterized-query>
+        </db:insert>
+        <set-payload value="Insert Success" doc:name="Set Payload"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+     <flow name="DBUpdate">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/update" allowedMethods="GET" doc:name="HTTP"/>
+        <db:update config-ref="Generic_Database_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[update dbo.EmployeeDetail set empname='ByHTTPupdate' where empdept=102]]></db:parameterized-query>
+        </db:update>
+        <set-payload value="Update Success" doc:name="Set Payload"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+    <flow name="DBSelect">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/select" allowedMethods="GET" doc:name="HTTP"/>
+        <db:select config-ref="Generic_Database_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[select empid,empname,empdept,empstatus from dbo.EmployeeDetail]]></db:parameterized-query>
+        </db:select>
+        <dw:transform-message doc:name="Transform Message">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+---
+{
+	Employees: {
+
+			(payload map {
+				Employee: {
+					EmpName: $.empname,
+					EmpId: $.empid,
+					EmpDept: $.empdept,
+					EmpStatus: $.empstatus
+					
+					}
+			} 
+			)
+		}
+}
+]]></dw:set-payload>
+        </dw:transform-message>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+    <flow name="DBDelete">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/delete" allowedMethods="GET" doc:name="HTTP"/>
+        <db:delete config-ref="Generic_Database_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[delete from dbo.EmployeeDetail where empdept = 102]]></db:parameterized-query>
+        </db:delete>
+        <set-payload value="Deleted Successfully" doc:name="Set Payload"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+    <flow name="DBExecutedllcreate">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/executedllcreate" allowedMethods="GET" doc:name="HTTP"/>
+        <db:execute-ddl config-ref="Generic_Database_Configuration" doc:name="Database">
+            <db:dynamic-query><![CDATA[CREATE TABLE [dbo].[EmployeeDetail](
+	[empid] [int] IDENTITY(1,1) NOT NULL,
+	[empname] [nchar](100) NULL,
+	[empdept] [int] NULL,
+	[empstatus] [nchar](10) NULL,
+ CONSTRAINT [PK_EmployeeDetail] PRIMARY KEY CLUSTERED 
+(
+	[empid] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]]]></db:dynamic-query>
+        </db:execute-ddl>
+        <set-payload value="DLL Execution Create Table Success" doc:name="Set Payload"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+    <flow name="DBExecutedlldrop">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/executedlldrop" allowedMethods="GET" doc:name="HTTP"/>
+        <db:execute-ddl config-ref="Generic_Database_Configuration" doc:name="Database">
+            <db:dynamic-query><![CDATA[drop table [dbo].[EmployeeDetail]]]></db:dynamic-query>
+        </db:execute-ddl>
+        <set-payload value="DLL Execution Drop Table Success" doc:name="Set Payload"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+</mule>
