@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:jms="http://www.mulesoft.org/schema/mule/jms" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd">
+    <jms:activemq-connector name="Active_MQ" brokerURL="tcp://localhost:61616" validateConnections="true" doc:name="Active MQ"/>
+    <spring:beans>
+        <spring:bean id="Bean" name="Bean" class="activemq_related.DemoRef" scope="request">
+            <spring:property name="name" value="Prakash111"/>
+        </spring:bean>
+    </spring:beans>
+    <flow name="activemq_relatedFlow">
+        <jms:inbound-endpoint queue="TestingOneWay" connector-ref="Active_MQ" doc:name="JMS">
+            <jms:transaction action="NONE"/>
+        </jms:inbound-endpoint>
+        <logger level="INFO" doc:name="Logger" message="Received TestingOneWay and before TestingPost  : #[payload]"/>
+        <message-properties-transformer doc:name="Message Properties">
+            <add-message-property key="Name" value="Prakash"/>
+            <add-message-property key="Company" value="Aspire"/>
+            <add-message-property key="DemoRef" value="Bean"/>
+        </message-properties-transformer>
+        <copy-properties propertyName="*" doc:name="Property"/>
+        <jms:outbound-endpoint queue="TestingPost" connector-ref="Active_MQ" doc:name="JMS">
+            <jms:transaction action="JOIN_IF_POSSIBLE"/>
+        </jms:outbound-endpoint>
+    </flow>
+     <flow name="activemq_Post">
+        <jms:inbound-endpoint queue="TestingPost" connector-ref="Active_MQ" doc:name="JMS">
+            <jms:transaction action="JOIN_IF_POSSIBLE"/>
+        </jms:inbound-endpoint>
+        <logger level="INFO" doc:name="Logger" message="Received post : #[payload]"/>
+    </flow>
+    <flow name="activemq_relatedFlow1">
+        <jms:inbound-endpoint exchange-pattern="request-response" queue="TestingReqResp" connector-ref="Active_MQ" doc:name="JMS">
+            <jms:transaction action="NONE"/>
+        </jms:inbound-endpoint>
+        <set-payload value="Message response to the calling JMS Queue" doc:name="Set Payload"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+</mule>
