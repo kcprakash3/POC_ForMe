@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<namespace xmlns="http://www.mulesoft.org/schema/mule/tooling.attributes" xmlns:mule="http://www.mulesoft.org/schema/mule/core" url="http://www.mulesoft.org/schema/mule/audit-log-aspire" prefix="audit-log-aspire">
+  <global-cloud-connector versions="[3.5.0,8.0.0]" caption="AuditLogAspire" description="" icon="" localId="parentConfig" image="" abstract="true" extends="http://www.mulesoft.org/schema/mule/audit-log-aspire/abstractAudit-log-aspireConnectorGeneric"></global-cloud-connector>
+  <global-cloud-connector versions="[3.5.0,8.0.0]" caption="AuditLogAspire: Configuration" description="Global Configuration configuration information." icon="icons/small/audit-log-aspire-connector-24x16.png" localId="config" image="icons/large/audit-log-aspire-connector-48x32.png" abstract="false" extends="http://www.mulesoft.org/schema/mule/audit-log-aspire/parentConfig" connectivityTesting="off" metaData="static" metaDataKeyDisplay="DISPLAY_NAME" supportsUserDefinedMetaData="false">
+    <attribute-category caption="General" description="Audit-log-aspire configuration properties.">
+      <group id="audit-log-aspireGenericProperties" caption="Basic Settings">
+        <name name="name" caption="Name" description="Give a name to this configuration so it can be later referenced by config-ref." required="true"></name>
+      </group>
+      <group id="general" caption="General">
+        <string defaultValue="Aspire" name="company" caption="Company" description="Company message." supportsExpressions="false" required="false" javaType="java.lang.String"></string>
+        <string defaultValue="Hello" name="greeting" caption="Greeting" description="Greeting message." supportsExpressions="false" required="false" javaType="java.lang.String"></string>
+        <string defaultValue="How are you?" name="reply" caption="Reply" description="Reply message." supportsExpressions="false" required="false" javaType="java.lang.String"></string>
+      </group>
+    </attribute-category>
+  </global-cloud-connector>
+  <cloud-connector caption="Abstractaudit-log-aspireconnectorgeneric" description="Interact with Audit-log-aspire." icon="icons/small/audit-log-aspire-connector-24x16.png" localId="abstractAudit-log-aspireConnectorGeneric" image="icons/large/audit-log-aspire-connector-48x32.png" abstract="true">
+    <attribute-category caption="General" description="General.">
+      <group id="abstractAudit-log-aspireConnectorGeneric" caption="Basic Settings">
+        <globalRef requiredType="http://www.mulesoft.org/schema/mule/audit-log-aspire/config" name="config-ref" caption="Connector Configuration" description="Specify which configuration to use for this invocation." required="true"></globalRef>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector versions="[3.5.0,8.0.0]" aliasId="org.mule.tooling.ui.modules.core.pattern.audit-log-aspire" caption="AuditLogAspire" description="" icon="icons/small/audit-log-aspire-connector-24x16.png" localId="audit-log-aspire-connector" image="icons/large/audit-log-aspire-connector-48x32.png" extends="http://www.mulesoft.org/schema/mule/audit-log-aspire/abstractAudit-log-aspireConnectorGeneric">
+    <attribute-category caption="General" description="General.">
+      <group id="audit-log-aspireConnectorGeneric" caption="Basic Settings">
+        <modeSwitch alwaysCombo="true" name="Audit-log-aspire operations to execute" caption="Operation" description="Operation.">
+          <no-operation abstractElement="http://www.mulesoft.org/schema/mule/audit-log-aspire/abstractAudit-log-aspireConnectorGeneric" versions="[3.5.0,8.0.0]" connector-name="processor"></no-operation>
+          <mode modeId="http://www.mulesoft.org/schema/mule/audit-log-aspire/get-company" modeLabel="Get company"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/audit-log-aspire/greet" modeLabel="Greet"></mode>
+        </modeSwitch>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="java.lang.String" caption="Get Company" icon="icons/small/audit-log-aspire-connector-24x16.png" localId="get-company" image="icons/large/audit-log-aspire-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/audit-log-aspire/abstractAudit-log-aspireConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="company" caption="Company" description="" required="true" javaType="java.lang.String"></string>
+        <string name="friend" caption="Friend" description="" required="true" javaType="java.lang.String"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="java.lang.String" caption="Greet" icon="icons/small/audit-log-aspire-connector-24x16.png" localId="greet" image="icons/large/audit-log-aspire-connector-48x32.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/audit-log-aspire/abstractAudit-log-aspireConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="friend" caption="Friend" description="Name to be used to generate a greeting message." required="true" javaType="java.lang.String"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+</namespace>

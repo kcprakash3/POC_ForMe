@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<repository name='file:/E:/SSP_Dev/REALWS/trunk/audit-log-aspire-connector/target/update-site/ - artifacts' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1'>
+  <properties size='2'>
+    <property name='p2.timestamp' value='1470818909074'/>
+    <property name='p2.compressed' value='false'/>
+  </properties>
+  <mappings size='3'>
+    <rule filter='(&amp; (classifier=osgi.bundle))' output='${repoUrl}/plugins/${id}_${version}.jar'/>
+    <rule filter='(&amp; (classifier=binary))' output='${repoUrl}/binary/${id}_${version}'/>
+    <rule filter='(&amp; (classifier=org.eclipse.update.feature))' output='${repoUrl}/features/${id}_${version}.jar'/>
+  </mappings>
+  <artifacts size='2'>
+    <artifact classifier='osgi.bundle' id='org.mule.tooling.ui.contribution.audit-log-aspire.3.5.0' version='1.0.0.201608101418'>
+      <properties size='3'>
+        <property name='artifact.size' value='336102'/>
+        <property name='download.size' value='336102'/>
+        <property name='download.md5' value='23322eb08af6cd4b72c7f20acf8e039f'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='org.mule.tooling.ui.extension.audit-log-aspire-connector.3.5.0' version='1.0.0.201608101418'>
+      <properties size='4'>
+        <property name='artifact.size' value='654'/>
+        <property name='download.size' value='654'/>
+        <property name='download.md5' value='19b0c0ece92f586a5c89140fc2c5f3a5'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+  </artifacts>
+</repository>

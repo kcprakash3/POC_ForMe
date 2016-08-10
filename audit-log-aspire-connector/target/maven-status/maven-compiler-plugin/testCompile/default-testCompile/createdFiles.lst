@@ -1,0 +1,3 @@
+org\mule\modules\auditlogaspire\automation\functional\GreetTestCases.class
+org\mule\modules\auditlogaspire\automation\runner\FunctionalTestSuite.class
+org\mule\modules\auditlogaspire\automation\functional\GetCompanyTestCases.class
