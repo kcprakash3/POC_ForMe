@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd">
+    <file:connector name="FileRead" autoDelete="false" streaming="false" validateConnections="true" doc:name="File"/>
+    <file:connector name="FileWrite" autoDelete="false" streaming="false" validateConnections="true" doc:name="File"/>
+    <flow name="file_relatedFlow">
+        <file:inbound-endpoint path="C:\MuleTraining\File\Input" moveToDirectory="C:\MuleTraining\File\Move" connector-ref="FileRead" pollingFrequency="5000" responseTimeout="10000" doc:name="File"/>
+        <logger message="In Process : #[payload]" level="INFO" doc:name="Logger"/>
+        <byte-array-to-string-transformer doc:name="Byte Array to String"/>
+        <logger message="After BA to String : #[payload]" level="INFO" doc:name="Logger"/>
+        <set-variable variableName="outputDir" value="C:/MuleTraining/File/Output" doc:name="Variable"/>
+        <set-variable variableName="filename" value="#[message.inboundProperties.originalFilename]" doc:name="Variable"/>
+        <file:outbound-endpoint path="#[flowVars.outputDir]" outputPattern=" #[message.inboundProperties.originalFilename]" connector-ref="FileWrite" responseTimeout="10000" doc:name="File"/>
+        <set-payload value="Removed the Original Payload" doc:name="Set Payload"/>
+        <scripting:transformer doc:name="Groovy">
+            <scripting:script engine="Groovy"><![CDATA[File file = new File('C:/MuleTraining/File/Move/'+flowVars.filename);
+return file;
+]]></scripting:script>
+        </scripting:transformer>
+        <flow-ref name="file_relatedSub_Flow" doc:name="file_relatedSub_Flow"/>
+        <file:file-to-string-transformer doc:name="File to String"/>
+        <logger message="Once again Read from file content : #[payload]" level="INFO" doc:name="Logger"/>
+    </flow>
+    <sub-flow name="file_relatedSub_Flow">
+        <file:file-to-byte-array-transformer doc:name="File to Byte Array"/>
+        <byte-array-to-string-transformer doc:name="Byte Array to String"/>
+        <logger message="From the File--&gt; BA--&gt;String  content : #[payload]" level="INFO" doc:name="Logger"/>
+    </sub-flow>
+</mule>
