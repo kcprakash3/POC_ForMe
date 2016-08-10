@@ -1,0 +1,58 @@
+#%RAML 0.8
+title: T-Shirt Ordering Service
+version: 1.0.development
+#baseUri: http://www.tshirt.com/api
+baseUri: http://172.24.144.25:8100/db
+mediaType: application/json
+resourceTypes: 
+  - base:
+      get:
+        responses:
+          200:
+            body:
+              
+traits:
+  - filterable:
+      queryParameters:
+        stockLevel:
+          displayName: Stock Level
+          description: Percentage of trays with stock items in them.
+          type: string
+          required: false
+          example: stockLevel=20
+        floatLevel:
+          displayName: Float Level
+          description: Percentage of monetary units present in the float.
+          type: string
+          required: false
+          example: floatLevel=80              
+/insert:
+  type: base
+  get:
+    responses:
+      200:
+        body:
+          example: |
+            {
+                "count" : 3,
+                "machines" : [
+                  {
+                    "id" : "ZX4102",
+                    "location" : "Starbuck's, 442 Geary Street, San Francisco, CA 94102"
+                  },
+                  {
+                    "id" : "ZX5322",
+                    "location" : "Starbuck's, 462 Powell Street, San Francisco, CA 94102"
+                  },
+                  {
+                    "id" : "ZX6792",
+                    "location" : "Cafe La Taza, 470 Post Street, San Francisco, CA 94102"
+                  }
+                ]
+            }
+      403:
+        body:
+          example: |
+            {
+               Pay NOt Found
+            }
